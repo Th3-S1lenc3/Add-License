@@ -141,7 +141,7 @@ func (a *AddLicense) Init() error {
     return err
   }
 
-  repoUrl := "github.com/Th3-S1lenc3/Add-License"
+  repoUrl := "https://raw.githubusercontent.com/Th3-S1lenc3/Add-License/master"
 
   a.appDir = fmt.Sprintf("%s/Add-License", configDir)
 
@@ -183,7 +183,7 @@ func (a *AddLicense) Init() error {
     return err
   }
 
-  for _, license := range a.licenses.Licenses {
+  for _, license := range a.licenses.Licenses {    
     licenseFile := fmt.Sprintf("%s/%s", licenseDir, license.LicenseFile)
 
     if IsNotExist(licenseFile) == true {

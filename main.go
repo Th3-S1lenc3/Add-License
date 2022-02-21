@@ -11,6 +11,7 @@ func main() {
   license := flag.String("l", "GPLv3", "License to add.")
   outputDir := flag.String("o", "", "Where to write the license. If not provided, current working directory will be used.")
   list := flag.Bool("list", false, "List Supported Licenses")
+  init := flag.Bool("i", false, "Run Inital Setup")
 
   flag.Parse()
 
@@ -18,6 +19,10 @@ func main() {
   if err != nil {
     fmt.Println(err)
     return
+  }
+
+  if *init == true {
+    return;
   }
 
   if *list == true {
