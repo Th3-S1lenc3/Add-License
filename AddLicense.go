@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-  gotoolbox "github.com/Th3-S1lenc3/go-toolbox"
+	gotoolbox "github.com/Th3-S1lenc3/go-toolbox"
 )
 
 type AddLicense struct {
@@ -87,9 +87,9 @@ func (a *AddLicense) Add(input string, dir string) error {
 
 	dir = strings.Join(dirCheck, "/")
 
-  if gotoolbox.IsNotExist(dir) == true {
-    return fmt.Errorf("Directory does not exist.")
-  }
+	if gotoolbox.IsNotExist(dir) == true {
+		return fmt.Errorf("Directory does not exist.")
+	}
 
 	dir = fmt.Sprintf("%s/LICENSE", dir)
 
