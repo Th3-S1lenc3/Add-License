@@ -1,9 +1,9 @@
 package main
 
 import (
-  "os"
-  "fmt"
-  "io"
+	"fmt"
+	"io"
+	"os"
 )
 
 func copy(src, dst string, BUFFERSIZE int64) error {

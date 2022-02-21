@@ -20,46 +20,46 @@ package main
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import (
-  "fmt"
-  "time"
+	"fmt"
+	"time"
 
-  "github.com/cavaliergopher/grab/v3"
+	"github.com/cavaliergopher/grab/v3"
 )
 
 func DownloadFile(dir string, remoteFileURL string) error {
-  // Create Client
-  client := grab.NewClient()
-  req, _ := grab.NewRequest(dir, remoteFileURL)
+	// Create Client
+	client := grab.NewClient()
+	req, _ := grab.NewRequest(dir, remoteFileURL)
 
-  // Start Download
-  fmt.Printf("Downloading %v...\n", req.URL())
+	// Start Download
+	fmt.Printf("Downloading %v...\n", req.URL())
 	resp := client.Do(req)
 	fmt.Printf("  %v\n", resp.HTTPResponse.Status)
 
-  // Start UI Loop
+	// Start UI Loop
 	t := time.NewTicker(500 * time.Millisecond)
 	defer t.Stop()
 
 Loop:
-  for {
-    select {
-    case <-t.C:
-      fmt.Printf(
-        "  transferred %v / %v bytes (%.2f%%)\n",
-        resp.BytesComplete(),
-        resp.Size,
-        100 * resp.Progress(),
-      )
-    case <- resp.Done:
-      break Loop
-    }
-  }
+	for {
+		select {
+		case <-t.C:
+			fmt.Printf(
+				"  transferred %v / %v bytes (%.2f%%)\n",
+				resp.BytesComplete(),
+				resp.Size,
+				100*resp.Progress(),
+			)
+		case <-resp.Done:
+			break Loop
+		}
+	}
 
-  if err := resp.Err(); err != nil {
-    return fmt.Errorf("Download failed %v\n", err)
-  }
+	if err := resp.Err(); err != nil {
+		return fmt.Errorf("Download failed %v\n", err)
+	}
 
-  fmt.Printf("Download saved to %v \n", resp.Filename)
+	fmt.Printf("Download saved to %v \n", resp.Filename)
 
-  return nil
+	return nil
 }

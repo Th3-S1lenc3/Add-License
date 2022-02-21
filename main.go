@@ -1,41 +1,41 @@
 package main
 
 import (
-  "flag"
-  "fmt"
+	"flag"
+	"fmt"
 )
 
 func main() {
-  addLicense := NewAddLicense()
+	addLicense := NewAddLicense()
 
-  license := flag.String("l", "GPLv3", "License to add.")
-  outputDir := flag.String("o", "", "Where to write the license. If not provided, current working directory will be used.")
-  list := flag.Bool("list", false, "List Supported Licenses")
-  init := flag.Bool("i", false, "Run Inital Setup")
+	license := flag.String("l", "GPLv3", "License to add.")
+	outputDir := flag.String("o", "", "Where to write the license. If not provided, current working directory will be used.")
+	list := flag.Bool("list", false, "List Supported Licenses")
+	init := flag.Bool("i", false, "Run Inital Setup")
 
-  flag.Parse()
+	flag.Parse()
 
-  err := addLicense.Init()
-  if err != nil {
-    fmt.Println(err)
-    return
-  }
+	err := addLicense.Init()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-  if *init == true {
-    return;
-  }
+	if *init == true {
+		return
+	}
 
-  if *list == true {
-    licenses := addLicense.ListLicenses()
-    fmt.Println(licenses)
-    return;
-  }
+	if *list == true {
+		licenses := addLicense.ListLicenses()
+		fmt.Println(licenses)
+		return
+	}
 
-  err = addLicense.Add(*license, *outputDir)
-  if err != nil {
-    fmt.Println(err)
-    return
-  }
+	err = addLicense.Add(*license, *outputDir)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-  fmt.Println("Done")
+	fmt.Println("Done")
 }

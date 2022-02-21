@@ -23,10 +23,10 @@ import "os"
 
 // Returns true if path does not exist
 func IsNotExist(path string) bool {
-  _, err := os.Stat(path)
-  if err != nil && os.IsNotExist(err) {
-    return true
-  }
+	_, err := os.Stat(path)
+	if err != nil && os.IsNotExist(err) {
+		return true
+	}
 
-  return false
+	return false
 }
