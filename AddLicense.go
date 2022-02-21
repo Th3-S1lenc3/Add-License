@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+
+  gotoolbox "github.com/Th3-S1lenc3/go-toolbox"
 )
 
 type AddLicense struct {
@@ -85,10 +87,9 @@ func (a *AddLicense) Add(input string, dir string) error {
 
 	dir = strings.Join(dirCheck, "/")
 
-	_, err := os.Stat(dir)
-	if err != nil && os.IsNotExist(err) {
-		return fmt.Errorf("Directory does not exist.")
-	}
+  if gotoolbox.IsNotExist(dir) == true {
+    return fmt.Errorf("Directory does not exist.")
+  }
 
 	dir = fmt.Sprintf("%s/LICENSE", dir)
 
@@ -107,7 +108,7 @@ func (a *AddLicense) Add(input string, dir string) error {
 
 	licensePath := fmt.Sprintf("%s/licenses/%s", a.appDir, licenseFile)
 
-	err = copy(licensePath, dir, 1024)
+	err = gotoolbox.Copy(licensePath, dir, 1024)
 	if err != nil {
 		return err
 	}
@@ -145,7 +146,7 @@ func (a *AddLicense) Init() error {
 
 	a.appDir = fmt.Sprintf("%s/Add-License", configDir)
 
-	if IsNotExist(a.appDir) == true {
+	if gotoolbox.IsNotExist(a.appDir) == true {
 		err = os.Mkdir(a.appDir, os.FileMode(0755))
 		if err != nil {
 			return err
@@ -154,7 +155,7 @@ func (a *AddLicense) Init() error {
 
 	licenseDir := fmt.Sprintf("%s/licenses", a.appDir)
 
-	if IsNotExist(licenseDir) == true {
+	if gotoolbox.IsNotExist(licenseDir) == true {
 		err = os.Mkdir(licenseDir, os.FileMode(0755))
 		if err != nil {
 			return err
@@ -166,8 +167,8 @@ func (a *AddLicense) Init() error {
 	licenseDirURL := fmt.Sprintf("%s/licenses", repoUrl)
 	licenseIndexURL := fmt.Sprintf("%s/index.json", licenseDirURL)
 
-	if IsNotExist(licenseIndex) == true {
-		err = DownloadFile(licenseDir, licenseIndexURL)
+	if gotoolbox.IsNotExist(licenseIndex) == true {
+		err = gotoolbox.DownloadFile(licenseDir, licenseIndexURL)
 		if err != nil {
 			return err
 		}
@@ -186,9 +187,9 @@ func (a *AddLicense) Init() error {
 	for _, license := range a.licenses.Licenses {
 		licenseFile := fmt.Sprintf("%s/%s", licenseDir, license.LicenseFile)
 
-		if IsNotExist(licenseFile) == true {
+		if gotoolbox.IsNotExist(licenseFile) == true {
 			licenseFileURL := fmt.Sprintf("%s/%s", licenseDirURL, license.LicenseFile)
-			err = DownloadFile(licenseDir, licenseFileURL)
+			err = gotoolbox.DownloadFile(licenseDir, licenseFileURL)
 			if err != nil {
 				return err
 			}
