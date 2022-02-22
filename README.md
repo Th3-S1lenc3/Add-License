@@ -1,4 +1,4 @@
-Omitted# Add-License
+# Add-License
 
 Command Line Program to add license file to directory
 
